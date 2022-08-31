@@ -10,6 +10,7 @@
 
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\F}{\mathcal{F}}
+\newcommand{\prob}{\boldsymbol{P}}
 
 \newcommand{\N}{\mathbb{N}}
 
@@ -21,6 +22,107 @@
 \maketitle
 
 \section*{1.1 Probability spaces, measures, and $\sigma$-algebras}
+
+\subsection*{Problem 1.1.4}
+
+Let $(\Omega, \F, \prob)$ be a probability space and $A, B, A_i$ events in $\F$. Prove the following properties of every probability measure.
+
+\subsubsection*{a}
+
+Monotonicity: If $A \subset B$ then $\prob(A) \leq \prob(B)$.
+
+If $A$ is not a proper subset of $B$, then $A=B$ and equality follows because $\prob$ is a function. Otherwise, $A$ partitions $B$ into $A$ and $B \backslash A$. Then by countable subadditivity,
+
+\[
+\prob(B) = \prob(A) + \prob(B \backslash A) \geq \prob(A)
+\]
+
+by the nonnegativity of measure.
+
+\subsubsection*{b}
+
+Sub-additivity:
+
+\[
+A \subset \cup_i A_i \longrightarrow \prob(A) \leq \sum_i \prob(A_i)
+\]
+
+Let $B_i = \cup_{k=1}^i A_k$, and $C_i = B_i - B_{i-1}$, letting $B_0 = \emptyset$. Then $\cup_i A_i = \cup_i C_i$, and $A \subset \cup_i C_i$. By monotonicity, $\prob(A) \leq \prob(\cup_i C_i)$. Since the $C_i$ are disjoint, $\prob(\cup_i C_i) = \sum_{i=1} \prob(C_i)$. Since $C_i = \cup_{j=1}^i A_j - \cup_{k=1}^{i-1}A_k$, $C_i \subset A_i$, so by monotonicity,
+
+\[
+\prob(A) \leq \sum_{i=1} \prob(C_i) \leq \sum_{i=1} \prob(A_i)
+\]
+
+\subsubsection*{c}
+
+Continuity from Below:
+
+$A_i \uparrow A$ implies $\prob(A_i) \uparrow \prob(A)$.
+
+Note that $\prob(A_i)$ is weakly increasing.
+
+Define $B_i = A_i - A_{i-1}$, and let $A_0 = \emptyset$. Then $A_i = \cup_{k=1}^i B_i$. Then by disjointedness $\prob(A_i) = \sum_{k=1}^i \prob(B_k)$ implies
+
+\[
+A = \cup_{i=1}^\infty = \cup_{i=1}^\infty \cup_{k=1}^i B_k = \cup_{i=1}^\infty
+\]
+
+and by countable additivity,
+
+\[
+\prob(A) = \sum_{k=1}^\infty \prob(B_k)
+\]
+
+Since the range of $\prob$ is $[0, 1]$, $|\prob(A)| < \infty$ and the series $\sum_{k=1}^\infty \prob(B_k)$ converges to $\prob(A)$. Since $A_i = \cup_{k=1}^i B_k$, $\prob(A_i)$ is the $i$th partial sum of the $\prob(B_k)$ series, which converges. Thus the $\prob(A_i)$ sequence converges to $\prob(A)$.
+
+\subsubsection*{d}
+
+Continuity from Above:
+
+$A_i \downarrow A, \cap_i^\infty A_i = A$ implies $\prob(A_i) \downarrow A$.
+
+\textbf{WORK IN PROGRESS}. I'm pretty sure I'm being sloppy when I switch from the unions/intersections in sets and the corresponding limits in probability. I need to fix that up.
+
+We first begin with an obvious lemma.
+
+\begin{lemma}
+$\prob(B\backslash A) = \prob(B) - \prob(A)$
+\begin{proof}
+$A$ and $B\backslash A$ partition $B$.
+\end{proof}
+\end{lemma}
+
+Let $B_i = A_1 \backslash A_i$. From the construction, we see that
+
+\[
+B_i \cup A \uparrow A_1
+\]
+
+Because $B_i$ and $A$ are disjoint, by continuity from below
+
+\[
+\prob(B_i) + \prob(A) \uparrow \prob(A_1)
+\]
+
+We now exploit this fact. Taking the union of all $B_i$'s to take advantage of continuity from below and using DeMorgan's laws,
+
+\[
+\cup_i^\infty B_i = \cup_i^\infty A_1 \backslash A_i = A_1 \backslash \cap_i^\infty A_i
+\]
+
+Taking probabilities on both sides and looking at the right side,
+
+\[
+\prob(A_1 \backslash \cup_i^\infty A_i) = \prob(A_1) - \lim_{n \rightarrow \infty} \prob(\cap_{n=1}^i A_i)
+\]
+
+Using the left side and continuity from below, we get
+
+\[
+\prob(A_1) - \prob(A) = \prob(A_1) - \lim_{n \rightarrow \infty} \prob(\cap_{n=1}^i A_i)
+\]
+
+which simplifies to the desired result. Downwards convergence then follows because $\prob$ being a nonnegative function and $\cap_{n=1}^i A_i$ being weakly decreasing imply that $\prob(\cap_{n=1}^i A_i)$ is weakly decreasing.
 
 \subsection*{Problem 1.1.5}
 
