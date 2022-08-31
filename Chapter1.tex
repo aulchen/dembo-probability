@@ -1,0 +1,71 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\newenvironment{proof}{\paragraph{Proof:}}{\hfill$\square$}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+
+\newcommand{\N}{\mathbb{N}}
+
+\author{Arthur Chen}
+\title{Chapter 1}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{1.1 Probability spaces, measures, and $\sigma$-algebras}
+
+\subsection*{Problem 1.1.5}
+
+Prove that a finitely additive non-negative set function $\mu$ on a measurable space $(\Omega, \F)$ with the 'continuity' property
+
+\[
+B_n \subset \F, B_n \downarrow \emptyset, \mu(B_n) < \infty \longrightarrow \mu(B_n) \rightarrow 0
+\]
+
+must be countably additive if $\mu(\Omega) < \infty$. Give an example that it is not necessarily so when $\mu(\Omega) = \infty$.
+
+Let $A_n \in \F$ be a countable collection of disjoint sets. Since the $A_n$ are measurable, we can take $\mu(A_i)$.
+
+\begin{lemma}
+Let $A_n \in \F$ be a countable collection of disjoint measurable sets, and let $\mu$ be a non-negative finitely additive function. Then for all $n \in \N$,
+
+\[
+\mu(\cup_{i=1}^\infty A_i) = \sum_{i=1}^n \mu(A_i) + \mu(\cup_{i=n+1}^\infty A_i)
+\]
+\begin{proof}
+The collection of sets $\{A_1, A_2 \dots A_n, \cup_{i=n+1}^\infty A_i\}$ is finite, and because sigma-algebras are closed under countable union, $\cup_{i=n+1}^\infty A_i \in \F$. The statement then follows because $\mu$ is finitely additive.
+\end{proof}
+\end{lemma}
+
+\begin{theorem}
+Let $M$ be the codomain of $\mu$ restricted on the collection $A = \{A_n\}$ - that is, $M$ is the set of values that $\mu$ takes when given $A_i$ as input. Then $M$ has a maximal value.
+\begin{proof}
+If $\mu(A_i)$ is nonzero only for a finite number of $A_i$'s, then the proof is trivial.
+
+Suppose that $\mu(A_i) > 0$ for a countable number of $A_i$'s. Suppose that $\mu$ does not have a maximal value, and let $A_i$ be an arbitrary set such that $\mu(A_i) = \epsilon > 0$. Then there exists $A_j$ such that $\mu(A_i) < \mu(A_j)$, and $A_k$ such that $\mu(A_j) < \mu(A_k)$, and so forth. Thus by induction, there are a countable number of sets $A_j, A_k \dots$ such that $\mu(A_j) > \epsilon$. Denote this collection $B$.
+
+$\mu(\Omega) < \infty$, so denote $\mu(\Omega) = M$. Since for all elements of $B$, $\mu(A_j) > \epsilon$, by the Archimedian property, we can take a finite number of the elements in $B$ such that the sum of their measures is greater than $M$.
+
+\[
+\mu(\cup_{i=1}^\infty A_i) = \sum_{i=1}^n \mu(A_i) + \mu(\cup_{i=n+1}^\infty A_i) > M
+\]
+
+by the above discussion and the non-negativity of $\mu$. However, $\cup_{i=1}^\infty A_i \subset \Omega$, so by the monotonicity of $\mu$, $\mu(\cup_{i=1}^\infty A_i) \leq M$. Thus by contradiction, $M$ has a largest element.
+\end{proof}
+\end{theorem}
+
+TODO.
+
+Relabel the $A_i$ so that they are ordered in decreasing measure. That is, $\mu(A_1) \geq \mu(A_2) \geq \dots$. We can do this by the above theorem because $M$ has a maximal element and $M$ is totally ordered.
+
+(Formally, I might have to invoke Zorn's lemma here, but I am not strong enough with it to say.)
+
+\end{document}
