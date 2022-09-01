@@ -81,48 +81,7 @@ Continuity from Above:
 
 $A_i \downarrow A, \cap_i^\infty A_i = A$ implies $\prob(A_i) \downarrow A$.
 
-\textbf{WORK IN PROGRESS}. I'm pretty sure I'm being sloppy when I switch from the unions/intersections in sets and the corresponding limits in probability. I need to fix that up.
-
-We first begin with an obvious lemma.
-
-\begin{lemma}
-$\prob(B\backslash A) = \prob(B) - \prob(A)$
-\begin{proof}
-$A$ and $B\backslash A$ partition $B$.
-\end{proof}
-\end{lemma}
-
-Let $B_i = A_1 \backslash A_i$. From the construction, we see that
-
-\[
-B_i \cup A \uparrow A_1
-\]
-
-Because $B_i$ and $A$ are disjoint, by continuity from below
-
-\[
-\prob(B_i) + \prob(A) \uparrow \prob(A_1)
-\]
-
-We now exploit this fact. Taking the union of all $B_i$'s to take advantage of continuity from below and using DeMorgan's laws,
-
-\[
-\cup_i^\infty B_i = \cup_i^\infty A_1 \backslash A_i = A_1 \backslash \cap_i^\infty A_i
-\]
-
-Taking probabilities on both sides and looking at the right side,
-
-\[
-\prob(A_1 \backslash \cup_i^\infty A_i) = \prob(A_1) - \lim_{n \rightarrow \infty} \prob(\cap_{n=1}^i A_i)
-\]
-
-Using the left side and continuity from below, we get
-
-\[
-\prob(A_1) - \prob(A) = \prob(A_1) - \lim_{n \rightarrow \infty} \prob(\cap_{n=1}^i A_i)
-\]
-
-which simplifies to the desired result. Downwards convergence then follows because $\prob$ being a nonnegative function and $\cap_{n=1}^i A_i$ being weakly decreasing imply that $\prob(\cap_{n=1}^i A_i)$ is weakly decreasing.
+Consider $A_i^C$. The $A_i^C$ are increasing sets because the $A_i$ are decreasing. $\cap_{i=1}^\infty A_i = A$ implies $A^C = (\cap_{i=1}^\infty A_i)^C = \cup_{i=1}^\infty A_i^C$. By continuity from below, $\prob(A_i^C) \uparrow \prob(A^C)$. Because $\prob(\Omega) = 1$, this implies $\prob(A_i) \downarrow \prob(A)$ as desired. 
 
 \subsection*{Problem 1.1.5}
 
@@ -134,40 +93,41 @@ B_n \subset \F, B_n \downarrow \emptyset, \mu(B_n) < \infty \longrightarrow \mu(
 
 must be countably additive if $\mu(\Omega) < \infty$. Give an example that it is not necessarily so when $\mu(\Omega) = \infty$.
 
-Let $A_n \in \F$ be a countable collection of disjoint sets. Since the $A_n$ are measurable, we can take $\mu(A_i)$.
+Let $A_n \in \F$ be a countable collection of disjoint, measurable sets. Let $B_k = \cup_{i=k}^\infty A_i$.
+
+Since sigma-algebras are closed under countable union, $B_k \in \F$ for all $k \in \N$. Since $\mu(\Omega) < \infty$, monotonicity implies that $\mu(B_k) < \infty$.
 
 \begin{lemma}
-Let $A_n \in \F$ be a countable collection of disjoint measurable sets, and let $\mu$ be a non-negative finitely additive function. Then for all $n \in \N$,
+$B_k \downarrow \emptyset$.
 
-\[
-\mu(\cup_{i=1}^\infty A_i) = \sum_{i=1}^n \mu(A_i) + \mu(\cup_{i=n+1}^\infty A_i)
-\]
 \begin{proof}
-The collection of sets $\{A_1, A_2 \dots A_n, \cup_{i=n+1}^\infty A_i\}$ is finite, and because sigma-algebras are closed under countable union, $\cup_{i=n+1}^\infty A_i \in \F$. The statement then follows because $\mu$ is finitely additive.
+The limit suupremum of $B_k$ is the set of points $x$ such that $x \in B_k$ for infinitely many $k$. I will show this set is empty.
+
+$B_k$ is the union of disjoint sets $A_i$, so $x \in B_k$ for some $k$ implies that $x \in A_j$ for some $j \in \N$. This then implies that $x \in B_k$ for $k \leq k$, and $x \not\in B_k$ for $k > j$. Thus $x$ is only in a finite number of $B_k$. Thus $\limsup B_k = \emptyset$. Since $\liminf B_k \subset \limsup B_k$ and the only subset of the empty set is the empty set, $\limsup B_k = \emptyset$. Since the upper and lower limit equal each other, $\lim B_k = \emptyset$. Since the $B_k$ are weakly decreasing, the lemma is proved.
 \end{proof}
 \end{lemma}
 
-\begin{theorem}
-Let $M$ be the codomain of $\mu$ restricted on the collection $A = \{A_n\}$ - that is, $M$ is the set of values that $\mu$ takes when given $A_i$ as input. Then $M$ has a maximal value.
-\begin{proof}
-If $\mu(A_i)$ is nonzero only for a finite number of $A_i$'s, then the proof is trivial.
-
-Suppose that $\mu(A_i) > 0$ for a countable number of $A_i$'s. Suppose that $\mu$ does not have a maximal value, and let $A_i$ be an arbitrary set such that $\mu(A_i) = \epsilon > 0$. Then there exists $A_j$ such that $\mu(A_i) < \mu(A_j)$, and $A_k$ such that $\mu(A_j) < \mu(A_k)$, and so forth. Thus by induction, there are a countable number of sets $A_j, A_k \dots$ such that $\mu(A_j) > \epsilon$. Denote this collection $B$.
-
-$\mu(\Omega) < \infty$, so denote $\mu(\Omega) = M$. Since for all elements of $B$, $\mu(A_j) > \epsilon$, by the Archimedian property, we can take a finite number of the elements in $B$ such that the sum of their measures is greater than $M$.
+We will now prove the main result. For all $n \in \N$, finite additivity means
 
 \[
-\mu(\cup_{i=1}^\infty A_i) = \sum_{i=1}^n \mu(A_i) + \mu(\cup_{i=n+1}^\infty A_i) > M
+\prob(\cup_{i=1}^\infty A_i) = \sum_{i=1}^n \prob(A_i) + \prob(\cup_{i=n+1}^\infty A_i) = \sum_{i=1}^n \prob(A_i) + \prob(B_{n+1})
 \]
 
-by the above discussion and the non-negativity of $\mu$. However, $\cup_{i=1}^\infty A_i \subset \Omega$, so by the monotonicity of $\mu$, $\mu(\cup_{i=1}^\infty A_i) \leq M$. Thus by contradiction, $M$ has a largest element.
-\end{proof}
-\end{theorem}
+Taking limits, the last term goes to zero, leaving
 
-TODO.
+\[
+\prob(\cup_{i=1}^\infty A_i) = \sum_{i=1}^\infty \prob(A_i)
+\]
 
-Relabel the $A_i$ so that they are ordered in decreasing measure. That is, $\mu(A_1) \geq \mu(A_2) \geq \dots$. We can do this by the above theorem because $M$ has a maximal element and $M$ is totally ordered.
+as desired.
 
-(Formally, I might have to invoke Zorn's lemma here, but I am not strong enough with it to say.)
+For an example of how this breaks down when $\mu(\Omega) = \infty$, let $\Omega = \N$, $\F = 2^\N$, and $\mu$ be finitely-additive with $\mu(\emptyset) = 0$ and the following properties:
+
+\begin{itemize}
+\item If $A_n \in \F$ is an event such that $A$ is a singleton that only contains $n \in N$, then $\mu(A_n) = \frac{1}{2^n}$.
+\item If $A \in \F$ is infinite, $\mu(A) = \infty$.
+\end{itemize}
+
+Thus, $\mu(\cup_{i=1}^\infty A_i) = \mu(\Omega) = \infty$, but $\lim_{n \rightarrow \infty} \sum_{i=1}^n \mu(A_i) = 2$. Thus $\mu$ is not countably additive.
 
 \end{document}
