@@ -27,7 +27,7 @@
 
 Let $(\Omega, \F, \prob)$ be a probability space and $A, B, A_i$ events in $\F$. Prove the following properties of every probability measure.
 
-\subsubsection*{a}
+\subsubsection*{Part a}
 
 Monotonicity: If $A \subset B$ then $\prob(A) \leq \prob(B)$.
 
@@ -39,7 +39,7 @@ If $A$ is not a proper subset of $B$, then $A=B$ and equality follows because $\
 
 by the nonnegativity of measure.
 
-\subsubsection*{b}
+\subsubsection*{Part b}
 
 Sub-additivity:
 
@@ -53,7 +53,7 @@ Let $B_i = \cup_{k=1}^i A_k$, and $C_i = B_i - B_{i-1}$, letting $B_0 = \emptyse
 \prob(A) \leq \sum_{i=1} \prob(C_i) \leq \sum_{i=1} \prob(A_i)
 \]
 
-\subsubsection*{c}
+\subsubsection*{Part c}
 
 Continuity from Below:
 
@@ -75,7 +75,7 @@ and by countable additivity,
 
 Since the range of $\prob$ is $[0, 1]$, $|\prob(A)| < \infty$ and the series $\sum_{k=1}^\infty \prob(B_k)$ converges to $\prob(A)$. Since $A_i = \cup_{k=1}^i B_k$, $\prob(A_i)$ is the $i$th partial sum of the $\prob(B_k)$ series, which converges. Thus the $\prob(A_i)$ sequence converges to $\prob(A)$.
 
-\subsubsection*{d}
+\subsubsection*{Part d}
 
 Continuity from Above:
 
@@ -129,5 +129,43 @@ For an example of how this breaks down when $\mu(\Omega) = \infty$, let $\Omega 
 \end{itemize}
 
 Thus, $\mu(\cup_{i=1}^\infty A_i) = \mu(\Omega) = \infty$, but $\lim_{n \rightarrow \infty} \sum_{i=1}^n \mu(A_i) = 2$. Thus $\mu$ is not countably additive.
+
+\subsection*{Problem 1.1.8}
+
+Suppose $\prob$ is non-atomic and $A \in F$ with $\prob(A) > 0$.
+
+\subsubsection*{Part a}
+
+Show that for every $\epsilon > 0$, we have $B \subset A$ such that $0 < \prob(B) < \epsilon$.
+
+If $\epsilon \geq \prob(A)$, then the proof is trivial. Otherwise, we will construct a sequence of decreasing subsets $A_n$ such that eventually, $\prob(A_n) < \epsilon$. Let $A_1 = A$. Because $\prob$ is nonatomic, there exists $B_1 \subset A, B_1 \in \F$ such that $\prob(B_1) < \prob(A_1)$. Since sigma-algebras are closed under complements, $A_1 \backslash B_1$ is also measurable, with $\prob(B_1) + \prob(A_1 \backslash B_1) = \prob(A_1)$. Because of this, we know that $\min(\prob(B_1), \prob(A_1 \backslash B_1)) \leq \frac{1}{2} \prob(A_1)$. Denote the subset with the smaller measure as $A_2$, and repeat this process to create $A_i$. Note that the $A_i$s are measurable by induction.
+
+Since at each step, $\prob(B_i) < \prob(A_i)$, $\prob(B_i), \prob(A_i \backslash B_i) > 0$. Thus, we construct a decreasing sequence $A_1 \supset A_2 \supset \dots$ such that at each step, $0 <\prob(A_i) \leq \frac{\prob(A)}{2^i}$. Eventually, for large enough $i$, we will get a $A_i$ with $\prob(A_i) < \epsilon$.
+
+\subsubsection*{Part b}
+
+Prove that if $0 < a < \prob(A)$, then there exists $B \subsetneq A$ with $\prob(B) = a$.
+
+
+I will follow the hint used in the notes. Let $\epsilon_n \downarrow 0$ be arbitrary but fixed. Define inductively the numbers $x_n$ and sets $G_n, H_n \in \F$ as follows.
+
+Let $H_0 = \emptyset$ and $H_n = \cup_{k<n} G_k$. What we're going to do is repeatedly take slices out of $A$. Denote these slices $G_i$. $H_n$ is the union of all the previous slices, and we keep taking slices $G_i$ to slowly increase $\prob(H_n)$ up to $a$, with $\epsilon_n$ controlling the rate of convergence. We construct these sets inductively. We start with the base case.
+
+We first figure out what the 'maximum' possible slice is. Let $x_n = \sup\{\prob(G): G \subset A\backslash H_n, \prob(H_n \cup G) \leq a\}$. In other words, $x_n$ is limiting value of the possible $G$s at this $n$th step, such that $\prob(H_{n+1})$ will be $\leq a$.
+
+This is where the non-atomic assumption comes in. $A \in \F$ by assumption, and $H_0 = \emptyset \in \F$ trivially. At the $n=1$ step, $A \backslash H_1 = A$ is measurable. By the assumption that $\prob$ is nonatomic and from Part a, there exists a $G \subset A$ such that $\prob(G) < a$. Thus this supremum is over a nonempty set, and $x_1$ is a real number.
+
+We now determine the actual $G_1$ we take. Because $x_1$ is the supremum of possible $G_1$ subsets we can take, we can take a $G_1$ such that $\prob(G_1)$ is arbitrarily close to $x_1$. This is where the $\epsilon_1$ comes in; it controls how arbitrarily close to $x_1$ we want $\prob(G_1)$ to be.
+
+Thus, let $G_1$ be a set $G_1 \subset A\backslash H_1 = A$ such that $\prob(H_1 \cup G_1) \leq a$ and $\prob(G_1) \geq (1-\epsilon_1)x_1$. As discussed above, this construction is well defined. We thus have a $G_1$ with the following properties:
+
+\begin{itemize}
+\item $\prob(H_1 \cup G_1) \leq a$
+\item \textbf{SOMETHING ABOUT HOW THE G1 ARE GETTING CLOSER TO a}
+\end{itemize}
+
+\textbf{TODO}
+
+inductively, $H_n \in \F$ for all $n \in \N$, implying $A\backslash H_n \in \F$ for all $n \in \N$. Now using the non-atomic assumption, there exists at $G \subset A\backslash H_n$ such that $\prob(G) < \prob(A\backslash H_n) = \prob(A) - \prob(H_n)$.
 
 \end{document}
